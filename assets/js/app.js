@@ -1,3 +1,4 @@
+//new update
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
 
@@ -140,7 +141,6 @@ const app = {
             repeatBtn.parentElement.classList.toggle('active', _this.isLoop)
         }
         
-        // console.log(_this.isLoop);
         randomBtn.onclick = function () {
             
         }
@@ -255,7 +255,6 @@ const app = {
             audio.volume = seekVolume
         }
 
-        
     },
     loadCurrentSong: function () {
         cdImg.src = this.currentSong.image
