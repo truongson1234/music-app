@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio app</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div id="main">
+        <div class="music-app">
+            <div class="music-player">
+                <div class="range">
+                    <div class="">
+                        <i class='bx bx-volume-full'></i>
+                        <span id="show-volume">100%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="100" class="slider" id="progressVolume">
+                </div>
+                <div class="range">
+                    <div class="">
+                        <i class='bx bx-time' ></i>
+                        <span id="show-time">00:00</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="0" class="slider" id="progressTime">
+                </div>
+                <div class="group-action">
+                    <div class="group-btn-control">
+                        <button class="btn btn-prev">
+                            <i class='bx bx-skip-previous' ></i>
+                        </button>
+                        <button class="btn btn-toggle">
+                            <i class='bx bx-play'></i>
+                        </button>
+                        <button class="btn btn-next">
+                            <i class='bx bx-skip-next' ></i>
+                        </button>
+                    </div>
+                    <div class="group-btn-sub">
+                        <button class="btn btn-repeat">
+                            <i class='bx bx-repost'></i>
+                        </button>
+                        <button class="btn btn-random">
+                            <i class='bx bx-shuffle'></i>
+                        </button>
+                    </div>
+                </div>
+                <audio id="audio" src="assets/music/iceman-sol7-ft.mck.mp3"></audio>
+            </div>
+            <div class="cd">
+                <img src="assets/img/img-iceman.jpg" alt="" class="img-cd">
+            </div>
+            <div class="list-songs">
+                
+            </div>
+        </div> 
+    </div>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
