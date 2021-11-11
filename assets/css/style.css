@@ -134,8 +134,15 @@ img {
 .btn-random > i {
   font-size: 18px;
   border-radius: 50%;
+  background-color: #fff;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 10px;
+}
+
+.btn-repeat.active > i,
+.btn-random.avtive > i {
+  color: #fff;
+  background-color: #000;
 }
 
 .cd {

@@ -14,6 +14,10 @@ const songsAvatarClone = $$('.song-avatar-clone')
 const progressVolume = $('#progressVolume')
 const progressTime = $('#progressTime')
 const playBtn = $('.btn-toggle')
+const prevBtn = $('.btn-prev > i')
+const nextBtn = $('.btn-next > i')
+const repeatBtn = $('.btn-repeat > i')
+const randomBtn = $('.btn-random > i')
 
 function timeFormat(ct) {
     minutes = Math.floor(ct / 60);
@@ -28,6 +32,7 @@ function timeFormat(ct) {
 const app = {
     currentIndex: 0,
     isPlaying: false,
+    isLoop: false,
     songs: [
         {
             name: 'Trốn tìm',
@@ -91,6 +96,8 @@ const app = {
         }).join('')
         
         listSongs.innerHTML = htmls
+        audio.src = this.songs[this.currentIndex].path
+        cdImg.src = this.songs[this.currentIndex].image
     },
     definePropertys: function () {
         Object.defineProperty(this, 'currentSong', {
@@ -102,6 +109,42 @@ const app = {
     handleEvents: function () {
         const _this = this;
 
+        playBtn.onclick = function () {
+            if (_this.isPlaying) {
+                audio.pause()
+            } else {
+                audio.play()
+            }
+        }
+
+        prevBtn.onclick = function () {
+            _this.currentIndex++
+            if (_this.currentIndex > _this.songs.length) {
+                _this.currentIndex = 0
+            }
+            _this.render()
+            audio.play()
+        }
+
+        nextBtn.onclick = function () {
+            _this.currentIndex--
+            if (_this.currentIndex < 0) {
+                _this.currentIndex = _this.songs.length - 1
+            }
+            _this.render()
+            audio.play()
+        }
+
+        repeatBtn.onclick = function () {   
+            _this.isLoop = !_this.isLoop
+            repeatBtn.parentElement.classList.toggle('active', _this.isLoop)
+        }
+        
+        // console.log(_this.isLoop);
+        randomBtn.onclick = function () {
+            
+        }
+
         const cdAnimate = cd.animate([
             {
                 transform: 'rotate(360deg)'
@@ -112,28 +155,6 @@ const app = {
         })
         
         cdAnimate.pause()
-
-        audio.onplay = function () {
-            _this.isPlaying = true
-            playBtn.firstElementChild.classList.remove('bx-play')
-            playBtn.firstElementChild.classList.add('bx-pause')
-            cdAnimate.play()
-        }
-
-        audio.onpause = function () {
-            _this.isPlaying = false
-            playBtn.firstElementChild.classList.remove('bx-pause')
-            playBtn.firstElementChild.classList.add('bx-play')
-            cdAnimate.pause()
-        }
-
-        playBtn.onclick = function () {
-            if (_this.isPlaying) {
-                audio.pause()
-            } else {
-                audio.play()
-            }
-        }
 
         listSongs.onclick = function (e) {
             const songItem = e.target.closest('.song-item')
@@ -190,6 +211,20 @@ const app = {
             audio.currentTime = seekTime
         }
 
+        audio.onplay = function () {
+            _this.isPlaying = true
+            playBtn.firstElementChild.classList.remove('bx-play')
+            playBtn.firstElementChild.classList.add('bx-pause')
+            cdAnimate.play()
+        }
+
+        audio.onpause = function () {
+            _this.isPlaying = false
+            playBtn.firstElementChild.classList.remove('bx-pause')
+            playBtn.firstElementChild.classList.add('bx-play')
+            cdAnimate.pause()
+        }
+
         audio.ontimeupdate = () => {
             if (audio.duration) {
                 progressTime.value = audio.currentTime / audio.duration * 100
@@ -205,6 +240,14 @@ const app = {
 
         audio.onvolumechange = () => {
             $('#show-volume').innerHTML = audio.volume * 100 + '%'
+        }
+
+        audio.onended = () => {
+            if (_this.isLoop) {
+                audio.play()          
+            } else {
+                nextBtn.click()
+            }
         }
 
         progressVolume.onchange = (event) => {
